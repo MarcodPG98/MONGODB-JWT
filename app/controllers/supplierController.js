@@ -3,6 +3,31 @@ const uploadFile = require("../middlewares/upload");
 
 const Suppliers = {
 
+    // GET get all Suppliers
+    getSuppliers: function(req, res) {
+        Supplier.find({}).then(data => {
+            res.send(data);
+        }).catch(err => {
+            res.status(500).send({
+                message: err.message || "Error occurred while retrieving Suppliers."
+            });
+        })
+    },
+    // GET Supplier by id
+    getSuppliersById: function(req, res) {
+        const id = req.params.id;
+        Supplier.findById(id).then(data => {
+            if (!data)
+                res.status(404).send({
+                    message: "Supplier with id " + id + " is not found."
+                });
+            else res.send(data);
+        }).catch(err => {
+            res.status(500).send({
+                message: err.message || "Error occured while retrieving Supplier with id " + id
+            })
+        })
+    },
     // POST create Supplier
     createSupplier: function(req, res){
 
@@ -27,31 +52,6 @@ const Suppliers = {
                 }
                 res.send({ message: "El supplier se ha registrado correctamente!" });
             });
-        })
-    },
-    // GET get all Suppliers
-    getSuppliers: function(req, res) {
-        Supplier.find({}).then(data => {
-            res.send(data);
-        }).catch(err => {
-            res.status(500).send({
-                message: err.message || "Error occurred while retrieving Suppliers."
-            });
-        })
-    },
-    // GET Supplier by id
-    getSuppliersById: function(req, res) {
-        const id = req.params.id;
-        Supplier.findById(id).then(data => {
-            if (!data)
-                res.status(404).send({
-                    message: "Supplier with id " + id + " is not found."
-                });
-            else res.send(data);
-        }).catch(err => {
-            res.status(500).send({
-                message: err.message || "Error occured while retrieving Supplier with id " + id
-            })
         })
     },
     // PUT update Supplier by id
@@ -177,7 +177,7 @@ const Suppliers = {
             });
           }
         });
-    }
+      }
 }
 
 module.exports = Suppliers;
