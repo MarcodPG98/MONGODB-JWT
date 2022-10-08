@@ -140,7 +140,7 @@ const Suppliers = {
         });
     },
     // DOWNLOAD descarga de archivo
-    download = (req, res) => {
+    download : (req, res) => {
         const fileName = req.params.name;
         const directoryPath = __basedir + "/app/resources/static/assets/uploads/";
       
@@ -151,7 +151,7 @@ const Suppliers = {
             });
           }
         });
-      };
+      }
 }
 
 module.exports = Suppliers;
