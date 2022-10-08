@@ -2,7 +2,8 @@ const { authJwt } = require("../middlewares");
 const controller = require("../controllers/supplierController");
 
 module.exports = function(app) {
-  
+  app.post("/api/supplier/create", [authJwt.verifyToken, authJwt.isAdmin], [controller.createSupplier]);
+
   app.get("/api/supplier/all", [authJwt.verifyToken, authJwt.isAdmin], [controller.getSuppliers]);
 
   app.get("/api/supplier/:id", [authJwt.verifyToken, authJwt.isAdmin], [controller.getSuppliersById]);

@@ -3,6 +3,32 @@ const uploadFile = require("../middlewares/upload");
 
 const Suppliers = {
 
+    // POST create Supplier
+    createSupplier: function(req, res){
+
+        const supplier = new Supplier({
+            fullname: req.body.fullname,
+            productname: req.body.username,
+            description: req.body.description,
+            amount: req.body.amount,
+            price: req.body.price
+        });
+
+        supplier.save((err, supplier) => {
+            if (err) {
+            res.status(500).send({ message: err });
+            return;
+            }
+
+            supplier.save((err) => {
+                if (err) {
+                  res.status(500).send({ message: err });
+                  return;
+                }
+                res.send({ message: "El supplier se ha registrado correctamente!" });
+            });
+        })
+    },
     // GET get all Suppliers
     getSuppliers: function(req, res) {
         Supplier.find({}).then(data => {
@@ -140,7 +166,7 @@ const Suppliers = {
         });
     },
     // DOWNLOAD descarga de archivo
-    download = (req, res) => {
+    download : (req, res) => {
         const fileName = req.params.name;
         const directoryPath = __basedir + "/app/resources/static/assets/uploads/";
       
@@ -151,7 +177,7 @@ const Suppliers = {
             });
           }
         });
-      };
+    }
 }
 
 module.exports = Suppliers;
